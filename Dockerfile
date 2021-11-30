@@ -1,4 +1,4 @@
-FROM python:3.7-buster
+FROM python:slim
 LABEL maintainer="Martin Jones <whatdaybob@outlook.com>"
 
 # Update and install ffmpeg
