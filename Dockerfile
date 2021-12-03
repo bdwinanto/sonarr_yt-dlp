@@ -3,7 +3,7 @@ LABEL maintainer="Martin Jones <whatdaybob@outlook.com>"
 
 # Update and install ffmpeg
 RUN apt-get update && \
-    apt-get install -y ffmpeg 
+    apt-get install --no-install-recommends -y ffmpeg gcc
 
 # Copy and install requirements
 COPY requirements.txt requirements.txt
@@ -11,12 +11,12 @@ RUN pip3 install -r requirements.txt
 
 # create abc user so root isn't used
 RUN \
-	groupmod -g 1000 users && \
-	useradd -u 911 -U -d /config -s /bin/false abc && \
-	usermod -G users abc && \
+        groupmod -g 1000 users && \
+        useradd -u 911 -U -d /config -s /bin/false abc && \
+        usermod -G users abc && \
 # create some files / folders
-	mkdir -p /config /app /sonarr_root /logs && \
-	touch /var/lock/sonarr_youtube.lock
+        mkdir -p /config /app /sonarr_root /logs && \
+        touch /var/lock/sonarr_youtube.lock
 
 # add volumes
 VOLUME /config
@@ -29,7 +29,7 @@ COPY app/ /app
 # update file permissions
 RUN \
     chmod a+x \
-    /app/sonarr_youtubedl.py \ 
+    /app/sonarr_youtubedl.py \
     /app/utils.py \
     /app/config.yml.template
 
