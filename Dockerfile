@@ -1,28 +1,16 @@
-FROM python:alpine AS base
+FROM python:alpine
 
-WORKDIR /app
+LABEL maintainer="Martin Jones <whatdaybob@outlook.com>"
 
-FROM base AS dependencies
-COPY requirements.txt ./
+ARG UID=1000
+ARG GID=1000
+ARG UNAME=abc
+
 RUN apk update && \
     apk add --no-cache ffmpeg build-base && \
-    pip install -r requirements.txt
-
-
-FROM base
-
-ARG UID=1000 GID=1000 UNAME=abc
-
-RUN adduser -D $UNAME
-WORKDIR /home/$UNAME
-
-COPY . /home/$UNAME
-COPY --from=dependencies /root/.cache /root/.cache
-COPY requirements.txt ./
-RUN pip install -r requirements.txt && rm -rf /root/.cache
-
-RUN mkdir /config /sonarr_root /logs && \
+    mkdir /config /app /sonarr_root /logs && \
     touch /var/lock/sonarr_youtube.lock
+
 COPY app/ /app
 
 RUN \
@@ -31,10 +19,22 @@ RUN \
     /app/utils.py \
     /app/config.yml.template
 
-COPY --chown=$UID:$GID . .
-USER $UNAME
+RUN pip install --upgrade pip
 
-VOLUME /config /sonarr_root /logs
+RUN adduser -D abc
+USER abc
+WORKDIR /home/abc
+
+COPY --chown=abc:abc requirements.txt requirements.txt
+RUN pip install --user -r requirements.txt
+
+ENV PATH="/home/abc/.local/bin:${PATH}"
+
+COPY --chown=abc:abc . .
+
+VOLUME /config
+VOLUME /sonarr_root
+VOLUME /logs
 
 ENV CONFIGPATH /config/config.yml
 CMD [ "python", "-u", "/app/sonarr_youtubedl.py" ]
