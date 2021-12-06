@@ -1,45 +1,40 @@
-FROM python:alpine
+FROM python:alpine AS base
 
-LABEL maintainer="Martin Jones <whatdaybob@outlook.com>"
+WORKDIR /app
 
-ARG UID=1000
-ARG GID=1000
-ARG UNAME=abc
-
-# Update and install ffmpeg
+FROM base AS dependencies
+COPY requirements.txt ./
 RUN apk update && \
-    apk add --no-cache ffmpeg alpine-sdk
+    apk add --no-cache ffmpeg build-base && \
+    pip install -r requirements.txt
 
-RUN mkdir /config /app /sonarr_root /logs && \
+
+FROM base
+
+ARG UID=1000 GID=1000 UNAME=abc
+
+RUN adduser -D $UNAME
+WORKDIR /home/$UNAME
+
+COPY . /home/$UNAME
+COPY --from=dependencies /root/.cache /root/.cache
+COPY requirements.txt ./
+RUN pip install -r requirements.txt && rm -rf /root/.cache
+
+RUN mkdir /config /sonarr_root /logs && \
     touch /var/lock/sonarr_youtube.lock
-
-# add local files
 COPY app/ /app
-# update file permissions
+
 RUN \
     chmod a+x \
     /app/sonarr_youtubedl.py \
     /app/utils.py \
     /app/config.yml.template
 
-RUN pip install --upgrade pip
-RUN adduser -D $UNAME
-USER $UNAME
-WORKDIR /home/$UNAME
-
-# Copy and install requirements
-COPY --chown=$UID:$GID requirements.txt requirements.txt
-RUN pip install --user -r requirements.txt
-
-ENV PATH="/home/$UNAME/.local/bin:${PATH}"
-
 COPY --chown=$UID:$GID . .
+USER $UNAME
 
-# add volumes
-VOLUME /config
-VOLUME /sonarr_root
-VOLUME /logs
+VOLUME /config /sonarr_root /logs
 
-# ENV setup
 ENV CONFIGPATH /config/config.yml
 CMD [ "python", "-u", "/app/sonarr_youtubedl.py" ]
