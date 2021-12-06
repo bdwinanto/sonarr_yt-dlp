@@ -21,16 +21,16 @@ RUN \
 
 RUN pip install --upgrade pip
 
-RUN adduser -D abc
-USER abc
-WORKDIR /home/abc
+RUN adduser -D $UNAME
+USER $UNAME
+WORKDIR /home/$UNAME
 
-COPY --chown=abc:abc requirements.txt requirements.txt
+COPY --chown=$UID:$GID requirements.txt requirements.txt
 RUN pip install --user -r requirements.txt
 
 ENV PATH="/home/abc/.local/bin:${PATH}"
 
-COPY --chown=abc:abc . .
+COPY --chown=$UID:$GID . .
 
 VOLUME /config
 VOLUME /sonarr_root
