@@ -1,10 +1,6 @@
 # Fork of sonarr_youtubedl by [@whatdaybob](https://github.com/whatdaybob)
-## Replace youtubedl with latest [yt-dlp](https://github.com/yt-dlp/yt-dlp) and use [python]{https://hub.docker.com/_/python}:alpine to create smaller image.
+## Replace youtubedl with latest [yt-dlp](https://github.com/yt-dlp/yt-dlp) and use [python](https://hub.docker.com/_/python):alpine to create smaller image.
 
-![Docker Build](https://img.shields.io/docker/cloud/automated/whatdaybob/sonarr_youtubedl?style=flat-square)
-![Docker Pulls](https://img.shields.io/docker/pulls/whatdaybob/sonarr_youtubedl?style=flat-square)
-![Docker Stars](https://img.shields.io/docker/stars/whatdaybob/sonarr_youtubedl?style=flat-square)
-[![Docker Hub](https://img.shields.io/badge/Open%20On-DockerHub-blue)](https://hub.docker.com/r/whatdaybob/sonarr_youtubedl)
 
 [whatdaybob/sonarr_youtubedl](https://github.com/whatdaybob/Custom_Docker_Images/tree/master/sonarr_youtubedl) is a [Sonarr](https://sonarr.tv/) companion script to allow the automatic downloading of web series normally not available for Sonarr to search for. Using [yt-dlp](https://github.com/yt-dlp/yt-dlp) it allows you to download your webseries from the list of [supported sites](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).
 
@@ -30,8 +26,8 @@ The architectures supported by this image are:
 
 | Architecture | Tag |
 | :----: | --- |
-| x86-64 | latest |
-| x86-64 | dev |
+| arm64 | arm64 |
+| armhf | arm32 |
 
 ## Version Tags
 
@@ -48,12 +44,12 @@ Obviously its a docker image so you need docker, if you don't know what that is 
 
 ```bash
 docker create \
-  --name=sonarr_youtubedl \
+  --name=sonarr_yt-dlp \
   -v /path/to/data:/config \
   -v /path/to/sonarrmedia:/sonarr_root \
   -v /path/to/logs:/logs \
   --restart unless-stopped \
-  whatdaybob/sonarr_youtubedl
+  bdwinanto/sonarr_yt-dlp:arm64
 ```
 
 ### docker-compose
@@ -62,9 +58,9 @@ docker create \
 ---
 version: '3.4'
 services:
-  sonarr_youtubedl:
-    image: whatdaybob/sonarr_youtubedl
-    container_name: sonarr_youtubedl
+  sonarr_yt-dlp:
+    image: whatdaybob/sonarr_yt-dlp:arm32
+    container_name: sonarr_yt-dlp
     volumes:
       - /path/to/data:/config
       - /path/to/sonarrmedia:/sonarr_root
