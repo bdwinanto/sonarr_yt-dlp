@@ -59,7 +59,7 @@ docker create \
 version: '3.4'
 services:
   sonarr_yt-dlp:
-    image: whatdaybob/sonarr_yt-dlp:arm32
+    image: bdwinanto/sonarr_yt-dlp:arm32
     container_name: sonarr_yt-dlp
     volumes:
       - /path/to/data:/config
