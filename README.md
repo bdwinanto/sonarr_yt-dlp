@@ -1,4 +1,4 @@
-# Fork of sonarr_youtubedl by [@whatdaybob](https://github.com/whatdaybob)
+# Fork of [whatdaybob/sonarr_youtubedl](https://github.com/whatdaybob/Custom_Docker_Images/tree/master/sonarr_youtubedl) by [@whatdaybob](https://github.com/whatdaybob)
 ## Replace youtubedl with latest [yt-dlp](https://github.com/yt-dlp/yt-dlp) and use [python](https://hub.docker.com/_/python):alpine to create smaller image.
 
 
