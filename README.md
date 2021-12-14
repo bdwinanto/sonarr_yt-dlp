@@ -26,8 +26,9 @@ The architectures supported by this image are:
 
 | Architecture | Tag |
 | :----: | --- |
-| arm64 | arm64 |
-| armhf | arm32 |
+| arm64 | latest |
+| armhf | latest |
+| amd64 | latest |
 
 ## Version Tags
 
@@ -49,7 +50,7 @@ docker create \
   -v /path/to/sonarrmedia:/sonarr_root \
   -v /path/to/logs:/logs \
   --restart unless-stopped \
-  bdwinanto/sonarr_yt-dlp:arm64
+  bdwinanto/sonarr_yt-dlp:latest
 ```
 
 ### docker-compose
@@ -59,7 +60,7 @@ docker create \
 version: '3.4'
 services:
   sonarr_yt-dlp:
-    image: bdwinanto/sonarr_yt-dlp:arm32
+    image: bdwinanto/sonarr_yt-dlp:latest
     container_name: sonarr_yt-dlp
     volumes:
       - /path/to/data:/config
@@ -71,7 +72,7 @@ services:
 
 | Parameter | Function |
 | :----: | --- |
-| `-v /config` | sonarr_youtubedl configs |
+| `-v /config` | sonarr_yt-dlp configs |
 | `-v /sonarr_root` | Root library location from Sonarr container |
 | `-v /logs` | log location |
 
