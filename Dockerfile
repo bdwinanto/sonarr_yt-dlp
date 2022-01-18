@@ -10,7 +10,7 @@ FROM python:alpine AS dependencies
 COPY requirements.txt ./
 RUN apk update && \
     apk add --no-cache build-base && \
-    pip install -r requirements.txt
+    pip install --upgrade pip && pip install -r requirements.txt
 
 FROM base
 
@@ -22,7 +22,7 @@ WORKDIR /home/$UNAME
 COPY . /home/$UNAME
 COPY --from=dependencies /root/.cache /root/.cache
 COPY requirements.txt ./
-RUN pip install -r requirements.txt && rm -rf /root/.cache
+RUN pip install --upgrade pip && pip install -r requirements.txt && rm -rf /root/.cache
 
 RUN mkdir /config /sonarr_root /logs && \
     touch /var/lock/sonarr_youtube.lock
