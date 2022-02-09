@@ -35,7 +35,7 @@ The architectures supported by this image are:
 | Tag | Description |
 | :----: | --- |
 | latest | Current release code |
-| dev | Pre-release code for testing issues |
+| {yt-dlp release version} | Pre-release code for testing issues |
 
 ## Great how do I get started
 
@@ -86,7 +86,14 @@ On first run the docker will create a template file in the config folder. Exampl
 
 Copy the `config.yml.template` to a new file called `config.yml` and edit accordingly.
 
-If you find yt-dlp able to download series but this docker is not able to, probably yt-dlp need to updated to latest version. Please compare yt-dlp:version in requirements.txt and update accordingly.
+
+
+### Note
+
+If you find yt-dlp able to download series but this docker is not able to, probably yt-dlp need to be updated to latest version. Please check yt-dlp=={version} in requirements.txt and update accordingly.
+
+
+
 
 If I helped in anyway and you would like to help me, consider donating a lovely beverage with the below.
 
