@@ -86,6 +86,8 @@ On first run the docker will create a template file in the config folder. Exampl
 
 Copy the `config.yml.template` to a new file called `config.yml` and edit accordingly.
 
+If you find yt-dlp able to download series but this docker is not able to, probably yt-dlp need to updated to latest version. Please compare yt-dlp:version in requirements.txt and update accordingly.
+
 If I helped in anyway and you would like to help me, consider donating a lovely beverage with the below.
 
 <!-- markdownlint-disable MD033 -->
