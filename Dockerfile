@@ -39,5 +39,5 @@ USER $UNAME
 
 VOLUME /config /sonarr_root /logs
 
-ENV CONFIGPATH /config/config.yml
+ENV CONFIGPATH=/config/config.yml
 CMD [ "python", "-u", "/app/sonarr_youtubedl.py" ]
